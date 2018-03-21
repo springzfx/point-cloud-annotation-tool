@@ -1,13 +1,15 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include "pcl/visualization/pcl_visualizer_extented.h"
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
-#include "pcl/visualization/pcl_visualizer.h"
 
-typedef pcl::PointXYZI  PointT;
+// we only use XYZI
+typedef pcl::PointXYZI PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
-typedef PointCloudT::Ptr PointCloudTPtr;
-typedef boost::shared_ptr<pcl::visualization::PCLVisualizer> PCLViewer;
+typedef boost::shared_ptr<PointCloudT> PointCloudTPtr;
+typedef PCLVisualizerExtented PCLViewer;
+typedef boost::shared_ptr<PCLVisualizerExtented> PCLViewerPtr;
 
 #endif // COMMON_H

@@ -1,5 +1,0 @@
-class Annotation
-{
-public:
-    Annotation() {}
-};
