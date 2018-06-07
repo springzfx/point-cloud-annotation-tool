@@ -1,6 +1,5 @@
 build/
 *.pcd
-*.txt
 *.user
 *.bin
 *.pro
