@@ -16,6 +16,9 @@ It is a tool used to annotate 3D box in point cloud. Point cloud in KITTI-bin fo
 
 ### dependency
 Tested with pcl 1.8, vtk 8.1, Qt5  under both ubuntu 16.04 and windows 10.
-
+to build:
+```
+mkdir build && cd build && cmake .. && make
+```
 
 ![example1 image](example1.png) ![example2 image](example2.png)
