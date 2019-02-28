@@ -20,16 +20,26 @@ public:
     void highlightPoint(vector<int>& slice);
     void defaultColorPoint(vector<int>& slice);
     void groundColorPoint(vector<int>& slice);
+    void inboxColorPoint(vector<int>& slice);
     void pickAnnotation(double x,double y);
     void createAnnotationFromSelectPoints(string type="unknown");
     void typeButtonClickedProcess(string type);
     void updateCloud();
-
+	double* getBoxPose(void);
+	void pointsInBox(void);
+	void pointsOutBox(void);
 protected:
     Ui::MainWindow* ui;
     PCLViewerPtr viewer;
     string pointcloudFileName;
     string annotationFileName;
+
+	bool fullscreen;
+	double width;
+    double epi;
+	double currentx;
+	double currenty;
+
     /**
      * @brief the loaded cloud
      */
@@ -78,6 +88,7 @@ protected:
 private:
     void AreaPickingEventProcess(const pcl::visualization::AreaPickingEvent& event);
     void MouseEventProcess (const pcl::visualization::MouseEvent& event);
+    void ConfigureEventProcess(void);
     void KeyboardEventProcess(const pcl::visualization::KeyboardEvent& event);
 
     // visibility
@@ -85,10 +96,16 @@ private:
     void showAnnotation(const Annotation* anno);
     void removeAnnotation();
     void removeAnnotation(Annotation* anno);
+	void toggleRenderers(void);
+    std::clock_t start;
+    double duration;
 
     // axes
     vtkSmartPointer<vtkOrientationMarkerWidget> axesWidget;
 
+	vtkSmartPointer<vtkCamera> camera1;
+	vtkSmartPointer<vtkCamera> camera2;
+	vtkSmartPointer<vtkCamera> camera3;
     // for pick
     Annotation *currPickedAnnotation;
 };

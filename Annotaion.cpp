@@ -41,7 +41,6 @@ Annotation::Annotation(const PointCloudTPtr cloud, vector<int> &slice, string ty
     vtkSmartPointer<vtkTransform> cubeTransform = vtkSmartPointer<vtkTransform>::New();
     cubeTransform->PostMultiply();
     cubeTransform->Scale(label.detail.length,label.detail.width,label.detail.height);
-    //        cubeTransform->RotateZ(label.detail.yaw);
     cubeTransform->RotateZ(label.detail.yaw*180/vtkMath::Pi());
     cubeTransform->Translate(label.detail.center_x,label.detail.center_y,label.detail.center_z);
 
@@ -85,18 +84,12 @@ void Annotation::picked(vtkRenderWindowInteractor *interactor){
     boxWidget = vtkSmartPointer<vtkBoxWidgetRestricted>::New();
     boxWidgetCallback0 = vtkSmartPointer<vtkBoxWidgetCallback0>::New();
     boxWidgetCallback0->setAnno(this);
-    boxWidgetCallback1 = vtkSmartPointer<vtkBoxWidgetCallback1>::New();
-    boxWidgetCallback1->setAnno(this);
+    //boxWidgetCallback1 = vtkSmartPointer<vtkBoxWidgetCallback1>::New();
+    //boxWidgetCallback1->setAnno(this);
 
     boxWidget->SetInteractor(interactor);
-    // boxWidget->SetProp3D( cubeActor );
-    // boxWidget->SetPlaceFactor( 1.25 ); // Make the box 1.25x larger than the actor
-    // boxWidget->PlaceWidget();
 
-    // default is [-0.5, 0.5], NOTE
-    // [-1,1] makes boxwidget fit to annotion,
-    // but [-0.5, 0.5] should be in the correct way, may be some bug
-    double bounds[6]={-1,1,-1,1,-1,1};
+	double bounds[6]={-1,1,-1,1,-1,1};
     boxWidget->PlaceWidget(bounds);
 
     vtkSmartPointer<vtkTransform> t=vtkSmartPointer<vtkTransform>::New();
@@ -106,8 +99,21 @@ void Annotation::picked(vtkRenderWindowInteractor *interactor){
     boxWidget->GetOutlineProperty()->SetAmbientColor(1.0,0.0,0.0);
 
     boxWidget->AddObserver( vtkCommand::InteractionEvent, boxWidgetCallback0 );
-    boxWidget->AddObserver( vtkCommand::EndInteractionEvent, boxWidgetCallback1 );
+    //boxWidget->AddObserver( vtkCommand::EndInteractionEvent, boxWidgetCallback1 );
     boxWidget->On();
+	
+}
+
+double* Annotation::getBoxPose(void){
+
+	return  transform->GetPosition();
+
+}
+
+double* Annotation::getBoxOri(void){
+
+	return  transform->GetOrientation();
+
 }
 
 void Annotation::unpicked(){
@@ -217,7 +223,7 @@ void Annotation::colorAnnotation(int color_index){
 
     actor->GetProperty()->SetLineWidth(2);
     actor->GetProperty ()->SetLighting (false);
-
+	actor->GetProperty()->SetOpacity(0.5);
     mapper->SetLookupTable(lut);
 }
 
