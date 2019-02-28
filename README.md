@@ -1,7 +1,7 @@
 ##  Overview
 This point cloud annotation tool is forked from springzfx with new modification.
 
-![example1 image](example_newe.png)
+![example1 image](example_new.png)
 ![Demo](pcl_demo.gif)
 
 ##  point cloud annotation tool
@@ -59,8 +59,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 1. Fancy Zhang
 
 (Meow!!) 
-.....\ 
-........_ 
-.....<(o )___ 
-......( .__> / 
-........`-----' 
+.....\  
+........_  
+.....<(o )___  
+......( .__> /  
+........`-----'  
