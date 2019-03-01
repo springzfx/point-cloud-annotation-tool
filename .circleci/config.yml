@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
         - image: louisgcr/point_cloud_annotation_tool:latest
-    working_directory: /home/point_cloud_annotation_tool
+    working_directory: /home
       
     steps:
       - run:
