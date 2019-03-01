@@ -226,8 +226,8 @@ void Visualizer::pickAnnotation(double x,double y){
 		camera1->SetRoll(-z_ori);
 		temp->SetActiveCamera(camera1);	
 		//Front_view
-		double front_x = cos((3.14159*z_ori)/180.0)*(10.0) + x;
-		double front_y = sin((3.14159*z_ori)/180.0)*(10.0) + y;
+		double front_x = cos((vtkMath::Pi()*z_ori)/180.0)*(10.0) + x;
+		double front_y = sin((vtkMath::Pi()*z_ori)/180.0)*(10.0) + y;
 		temp = viewer->getRendererCollection()->GetNextItem();
 		camera2->SetPosition(front_x,front_y,z);
 		camera2->SetFocalPoint(x,y,z);
@@ -235,8 +235,8 @@ void Visualizer::pickAnnotation(double x,double y){
 		temp->SetActiveCamera(camera2);	
 	
 		//Side view
-		double side_x = cos((3.14159*(z_ori + 90.0))/180.0)*(10.0) + x;
-		double side_y = sin((3.14159*(z_ori + 90.0))/180.0)*(10.0) + y;
+		double side_x = cos((vtkMath::Pi()*(z_ori - 90.0))/180.0)*(10.0) + x;
+		double side_y = sin((vtkMath::Pi()*(z_ori - 90.0))/180.0)*(10.0) + y;
 		temp = viewer->getRendererCollection()->GetNextItem();
 		camera3->SetPosition(side_x,side_y,z);
 		camera3->SetFocalPoint(x,y,z);
@@ -546,8 +546,8 @@ void Visualizer::ConfigureEventProcess(){
 				temp[i].resize(7);
 			}
 			std::string str = "X:"       + temp[0]  + " Lenght:"  + temp[3]+
-			                  "\r\nY:"   + temp[1]  + " Height:"  + temp[4]+
-							  "\r\nZ:"   + temp[2]  + " Width : " + temp[5]+ 
+			                  "\r\nY:"   + temp[1]  + " Width :"  + temp[4]+
+							  "\r\nZ:"   + temp[2]  + " Height:" + temp[5]+ 
 							  "\r\nYaw:" + temp[6]  + " deg";
 
 			ui->label_message->setText(QString::fromStdString(str));
