@@ -11,7 +11,7 @@ jobs:
           name: Set-up repo and compile
           command: |
             git clone https://github.com/Louisgcr/point-cloud-annotation-tool.git
-            cd point_cloud_annotation_tool
+            cd point-cloud-annotation-tool
             mkdir build
             cd build
             cmake ..
