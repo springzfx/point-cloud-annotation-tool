@@ -3,15 +3,20 @@ jobs:
   build:
     docker:
         - image: louisgcr/point_cloud_annotation_tool:latest
-    working_directory: /home
+    working_directory: /home/point_cloud_annotation_tool
+
+    steps:
+      - run:
+          command: 
+            git clone https://github.com/Louisgcr/point-cloud-annotation-tool.git
+            cd point_cloud_annotation_tool
     steps:
       - checkout
       - run:
           shell: /bin/bash
           name: Set-up repo and compile
           command: |
-            git clone https://github.com/Louisgcr/point-cloud-annotation-tool.git 
-            cd point_cloud_annotation_tool
+            
             mkdir build
             cd build
             cmake ..
