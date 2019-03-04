@@ -140,12 +140,7 @@ void Visualizer::initialize()
 	int v3(3);
 	viewer->createViewPort (width + epi, 0.00, 1.0, 0.329, v3);
 	viewer->setBackgroundColor (.2, .2, .2, v3);	
-
-	//Create a camera pointer for each render, set when selecting an actor
-	camera1 =  vtkSmartPointer<vtkCamera>::New();
-	camera2 =  vtkSmartPointer<vtkCamera>::New();
-	camera3 =  vtkSmartPointer<vtkCamera>::New();
-
+	
 	//axes
 	vtkSmartPointer<vtkAxesActor> axes =
 		vtkSmartPointer<vtkAxesActor>::New();
@@ -185,6 +180,7 @@ void Visualizer::pickAnnotation(double x,double y){
 	// get the correspond annotation
 	Annotation *clicked = annoManager->getAnnotation(pickedActor);
 	if(clicked){
+
 		pointsOutBox();
 		if(currPickedAnnotation != NULL){
 			currPickedAnnotation->unpicked();
@@ -194,6 +190,11 @@ void Visualizer::pickAnnotation(double x,double y){
 			currPickedAnnotation = NULL;
 			return;
 		}
+		
+		camera1 =  vtkSmartPointer<vtkCamera>::New();
+		camera2 =  vtkSmartPointer<vtkCamera>::New();
+		camera3 =  vtkSmartPointer<vtkCamera>::New();
+
 
 		currPickedAnnotation = clicked;	
 		currPickedAnnotation->picked(viewer->getRenderWindowInteractor());
@@ -224,7 +225,8 @@ void Visualizer::pickAnnotation(double x,double y){
 		camera1->SetPosition(x,y,z+15);
 		camera1->SetFocalPoint(x,y,z);
 		camera1->SetRoll(-z_ori);
-		temp->SetActiveCamera(camera1);	
+		temp->SetActiveCamera(camera1);
+
 		//Front_view
 		double front_x = cos((vtkMath::Pi()*z_ori)/180.0)*(10.0) + x;
 		double front_y = sin((vtkMath::Pi()*z_ori)/180.0)*(10.0) + y;
@@ -244,8 +246,9 @@ void Visualizer::pickAnnotation(double x,double y){
 		temp->SetActiveCamera(camera3);	
 	
 		pointsInBox();
-
-	}
+	
+		}
+	
 
 }
 
@@ -651,14 +654,14 @@ void Visualizer::refresh()
 	viewer->addPointCloud<PointT>(cloud,colorHandler,"cloud1",1);
 	viewer->addPointCloud<PointT>(cloud,colorHandler,"cloud2",2);
 	viewer->addPointCloud<PointT>(cloud,colorHandler,"cloud3",3);
+	
+	//show annotation if exists
+	showAnnotation();
 
 	viewer->resetCamera();
 	ui->qvtkWidget->update();
-
-	// show annotation if exists
-	showAnnotation();
 }
-
+	
 /* @brief: save annotation to current point cloud location
  * */
 void Visualizer::save()
