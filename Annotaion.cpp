@@ -2,6 +2,7 @@
 #include <vtkAnnotationBoxSource.h>
 #include <vtkBoxWidgetRestricted.h>
 #include <vtkBoxWidgetCallback.h>
+#include <stdio.h>
 
 using namespace std;
 
@@ -354,9 +355,15 @@ void Annotaions::loadAnnotations(string filename)
 void Annotaions::saveAnnotations(string filename)
 {
     if (annotations.empty()) return;
+
+	if(std::remove(filename.c_str()) == 0){
+		std::cout<<"Removed old files"<<std::endl;
+	}
+
     std::ofstream output(filename.c_str(), std::ios_base::out);
     for (auto anno:annotations){
         output<<anno->getBoxLabel().toString()<<std::endl;
+		//std::cout<<anno->getBoxLabel().toString()<<std::endl;
     }
     output.close();
 }

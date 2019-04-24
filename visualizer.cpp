@@ -286,6 +286,9 @@ void Visualizer::removeAnnotation(Annotation *anno)
 		currPickedAnnotation->unpicked();
 		currPickedAnnotation=NULL;
 	}
+
+	annoManager->remove(anno);
+
 	viewer->removeActorFromRenderer(anno->getActor());
 }
 
@@ -608,6 +611,25 @@ void Visualizer::openFile()
 	annotationFileName=pointcloudFileName+".txt";
 	if (QFile::exists(QString::fromStdString(annotationFileName))){
 		annoManager->loadAnnotations(annotationFileName);
+	}else{
+		//Try load from previous PCD
+		string previous_file_name = pointcloudFileName;
+		
+		previous_file_name.erase(previous_file_name.find(".pcd"), 4);
+		std::size_t found = previous_file_name.find_last_of("/\\");
+
+		std::string sub1 = previous_file_name.substr(0, found+1);
+		std::string sub2 = previous_file_name.substr(found+1);
+
+		int temp = std::stoi(sub2);
+		temp -= 1;
+
+		annotationFileName= sub1 + std::to_string(temp) + ".pcd.txt";
+		std::cout<<annotationFileName<<std::endl;
+
+		if(QFile::exists(QString::fromStdString(annotationFileName))){
+			annoManager->loadAnnotations(annotationFileName);
+		}
 	}
 
 	refresh();
