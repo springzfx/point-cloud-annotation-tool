@@ -54,7 +54,8 @@ Visualizer::Visualizer(QWidget *parent)
 		
 		//Link ConfigureEventProcess to interactor ConfigureEvent to update message box with the current selected boxwidget
 		ui->qvtkWidget->GetInteractor()->AddObserver(vtkCommand::ConfigureEvent, this, &Visualizer::ConfigureEventProcess);
-		
+		ui->qvtkWidget->update();	
+
 		// UI
 		connect(ui->action_Open,&QAction::triggered,this,&Visualizer::openFile);
 		connect(ui->action_Save,&QAction::triggered,this,&Visualizer::save);
@@ -195,7 +196,6 @@ void Visualizer::pickAnnotation(double x,double y){
 		camera2 =  vtkSmartPointer<vtkCamera>::New();
 		camera3 =  vtkSmartPointer<vtkCamera>::New();
 
-
 		currPickedAnnotation = clicked;	
 		currPickedAnnotation->picked(viewer->getRenderWindowInteractor());
 		viewer->getRenderWindow()->GetInteractor()->ConfigureEvent();	
@@ -248,7 +248,6 @@ void Visualizer::pickAnnotation(double x,double y){
 		pointsInBox();
 	
 		}
-	
 
 }
 
@@ -586,6 +585,7 @@ void Visualizer::KeyboardEventProcess(const KeyboardEvent& event)
  * */
 void Visualizer::openFile()
 {
+
 	//change location of open file to user desktop
 	string path(getenv("HOME"));
 	path += "/Desktop/";
@@ -594,7 +594,9 @@ void Visualizer::openFile()
 	pointcloudFileName = QFileDialog::getOpenFileName(this, tr("Open PCD file"), qstr, tr("PCD Files (*.pcd *.bin)")).toStdString();
 	if (pointcloudFileName.empty()) return;
 
+  	viewer->removeAllShapes();
 	clear();
+
 	QFileInfo file(QString::fromStdString(pointcloudFileName));
 	QString ext = file.completeSuffix();  // ext = "bin" ,"pcd"
 
@@ -630,8 +632,9 @@ void Visualizer::openFile()
 		if(QFile::exists(QString::fromStdString(annotationFileName))){
 			annoManager->loadAnnotations(annotationFileName);
 		}
+		annotationFileName=pointcloudFileName+".txt";
 	}
-
+ 
 	refresh();
 	std::cout<<"Instructions: "<<std::endl;
 	std::cout<<"    Mouse Center : Pan camera view"<<std::endl;
