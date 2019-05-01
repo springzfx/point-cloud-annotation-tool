@@ -12,6 +12,7 @@ void vtkBoxWidgetCallback0::Execute(vtkObject *caller, unsigned long, void *)
 {
     // Here we use the vtkBoxWidget to transform the underlying coneActor
     // (by manipulating its transformation matrix).
+	//std::cout<<"VTK Box Widget CB 0 Execute"<<std::endl;
     vtkSmartPointer<vtkTransform> t =
             vtkSmartPointer<vtkTransform>::New();
     vtkBoxWidget *widget = reinterpret_cast<vtkBoxWidget*>(caller);
@@ -36,7 +37,7 @@ vtkBoxWidgetCallback1 *vtkBoxWidgetCallback1::New()
 
 void vtkBoxWidgetCallback1::Execute(vtkObject *caller, unsigned long, void *)
 {
-    if (anno){
+	if (anno){
         anno->adjustToAnchor();
     }
 }

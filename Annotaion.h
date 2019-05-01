@@ -95,6 +95,16 @@ public:
      */
     void picked(vtkRenderWindowInteractor* interactor);
 
+    /* @brief: Get the box pose 
+	 * @return ptr that contains box position
+	 */
+	double* getBoxPose(void);
+	
+	/* @brief: Get the box orientation(You never know, it may be gay)
+	 * @return: ptr that contains orientation
+	 */
+	double* getBoxOri(void);
+
     /**
      * @brief disable boxWidget
      */

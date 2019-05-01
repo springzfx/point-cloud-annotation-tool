@@ -4,10 +4,10 @@
 /// Lookup table
 static const unsigned char CloudLUT[] =
 {
-  255 , 255, 255 , // default
+  125 , 125, 125 , // default
   255,  0,   0   , // highted
-  0  ,  0,   255   // ground
-
+  0  ,  0,   255 ,  // ground
+  0  ,  255, 0
 };
 
 /// Number of colors in Glasbey lookup table

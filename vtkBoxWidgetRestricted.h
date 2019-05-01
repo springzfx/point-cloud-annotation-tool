@@ -8,6 +8,9 @@
 #include <vtkPoints.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include "vtkSphereSource.h"
+#include "vtkCamera.h"
+#include "vtkCallbackCommand.h"
 
 /**
  * @brief The vtkBoxWidgetRestricted class
@@ -23,5 +26,7 @@ public:
     vtkTypeMacro(vtkBoxWidgetRestricted,vtkBoxWidget);
 
     virtual void Rotate(int X, int Y, double *p1, double *p2, double *vpn);
+    virtual void SizeHandles(void);
+    virtual void OnMouseMove(void);
 };
 #endif
